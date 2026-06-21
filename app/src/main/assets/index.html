@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#063b7a" />
+  <title>Snubbing Calculator</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <button class="icon-btn" id="refreshBtn" title="Refresh data">↻</button>
+    <div><div class="rig">♜</div></div>
+    <h1>Snubbing Calculator</h1>
+    <button class="icon-btn" id="resetBtn" title="Reset inputs">Reset</button>
+  </header>
+
+  <main class="wrap">
+    <section class="card input-card">
+      <h2>Inputs</h2>
+      <div class="grid two">
+        <label>Tubing Size<select id="sizeSelect"></select></label>
+        <label>Grade<select id="gradeSelect"></select></label>
+      </div>
+      <label>Weight / Connection<select id="tubeSelect"></select></label>
+      <div class="grid two">
+        <label>Wellbore Pressure <span>(psi)</span><input id="pressureInput" inputmode="decimal" type="number" min="0" step="1" value="3000"></label>
+        <label>Average Joint Length <span>(ft)</span><input id="jointInput" inputmode="decimal" type="number" min="1" step="0.1" placeholder="31.3"></label>
+      </div>
+      <div class="grid two segmented-row">
+        <fieldset><legend>Ram to Ram</legend><div class="seg"><button data-group="ram" data-value="Yes" class="active">Yes</button><button data-group="ram" data-value="No">No</button></div></fieldset>
+        <fieldset><legend>Direction</legend><div class="seg"><button data-group="direction" data-value="RIH" class="active">RIH</button><button data-group="direction" data-value="POOH">POOH</button></div></fieldset>
+      </div>
+      <fieldset id="tubingFullField" class="disabled"><legend>Tubing Full <span>(POOH only)</span></legend><div class="seg"><button data-group="full" data-value="Yes">Yes</button><button data-group="full" data-value="No" class="active">No</button></div></fieldset>
+      <div class="grid two">
+        <label id="tubeFluidLabel" class="disabled">Tubing Fluid Weight <span>(ppg)</span><input id="tubeFluidInput" inputmode="decimal" type="number" min="0" step="0.1" placeholder="optional" disabled></label>
+        <label>Wellbore Fluid Weight <span>(ppg)</span><input id="wellFluidInput" inputmode="decimal" type="number" min="0" step="0.1" placeholder="optional"></label>
+      </div>
+      <div class="status" id="dataStatus">Loading data…</div>
+    </section>
+
+    <section class="card tubing-card">
+      <h2>Selected Tubing</h2>
+      <dl class="details" id="selectedDetails"></dl>
+      <div class="weight-box"><div>Effective Pipe Weight</div><strong id="effectiveWeight">—</strong><small id="weightNote">—</small></div>
+    </section>
+
+    <section class="card results-card">
+      <h2>Results</h2>
+      <div class="results-grid">
+        <article class="result-block primary"><h3>Snub Force</h3><p>No Friction Factor <b id="snubNo">—</b></p><p>With Friction Factor <b id="snubFriction">—</b></p></article>
+        <article class="result-block purple" id="annularForceBlock"><h3>Possible Snub Force Through Annular</h3><p>No Friction Factor <b id="annularNo">—</b></p><p>With Friction Factor <b id="annularFriction">—</b></p></article>
+      </div>
+      <div class="length-grid">
+        <article class="length-card"><h3>Unsupported Length - No Friction</h3><div><span>100%</span><b id="lenNo100">—</b></div><div><span>80%</span><b id="lenNo80">—</b></div></article>
+        <article class="length-card"><h3>Unsupported Length - With Friction</h3><div><span>100%</span><b id="lenF100">—</b></div><div><span>80%</span><b id="lenF80">—</b></div></article>
+        <article class="length-card annular-only"><h3>Unsupported Length - Through Annular No Friction</h3><div><span>100%</span><b id="lenAnnNo100">—</b></div><div><span>80%</span><b id="lenAnnNo80">—</b></div></article>
+        <article class="length-card annular-only"><h3>Unsupported Length - Through Annular With Friction</h3><div><span>100%</span><b id="lenAnnF100">—</b></div><div><span>80%</span><b id="lenAnnF80">—</b></div></article>
+      </div>
+      <article class="transition"><h3>Transition to Pipe Heavy <span>(based on no friction force)</span></h3><div><p>Transition Length <b id="transFt">—</b></p><p>Transition Length <b id="transJoints">—</b></p></div></article>
+      <p class="note">All force values are rounded up to the next whole pound. Use the 80% unsupported-length values as operating limits.</p>
+    </section>
+  </main>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
